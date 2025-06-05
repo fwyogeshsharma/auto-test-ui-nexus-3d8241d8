@@ -2,6 +2,16 @@
 import { useState } from "react";
 import { DashboardSidebar } from "@/components/DashboardSidebar";
 import { TestCaseDefinitions } from "@/components/TestCaseDefinitions";
+import { AutomationMapping } from "@/components/AutomationMapping";
+import { ReleaseMapping } from "@/components/ReleaseMapping";
+import { TestCoverage } from "@/components/TestCoverage";
+import { ExecutionReport } from "@/components/ExecutionReport";
+import { TestCaseAddition } from "@/components/TestCaseAddition";
+import { TestStepAddition } from "@/components/TestStepAddition";
+import { Projects } from "@/components/Projects";
+import { MyProfile } from "@/components/MyProfile";
+import { Organisation } from "@/components/Organisation";
+import { Pricing } from "@/components/Pricing";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, CheckCircle, Clock, Users } from "lucide-react";
 
@@ -12,6 +22,26 @@ const Dashboard = () => {
     switch (currentView) {
       case "test-definitions":
         return <TestCaseDefinitions />;
+      case "automation-mapping":
+        return <AutomationMapping />;
+      case "release-mapping":
+        return <ReleaseMapping />;
+      case "test-coverage":
+        return <TestCoverage />;
+      case "execution":
+        return <ExecutionReport />;
+      case "test-case-addition":
+        return <TestCaseAddition />;
+      case "test-step-addition":
+        return <TestStepAddition />;
+      case "projects":
+        return <Projects />;
+      case "my-profile":
+        return <MyProfile />;
+      case "organisation":
+        return <Organisation />;
+      case "pricing":
+        return <Pricing />;
       default:
         return (
           <div className="p-6">
