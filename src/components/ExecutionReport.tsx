@@ -10,11 +10,11 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
 const chartData = [
-  { name: "Total Datasets", value: 0, color: "#22c55e" },
-  { name: "Pass", value: 0, color: "#eab308" },
-  { name: "Fail", value: 0, color: "#ef4444" },
-  { name: "Skip", value: 0, color: "#f97316" },
-  { name: "Block", value: 0, color: "#374151" },
+  { name: "Total Datasets", value: 45, color: "#22c55e" },
+  { name: "Pass", value: 25, color: "#eab308" },
+  { name: "Fail", value: 8, color: "#ef4444" },
+  { name: "Skip", value: 7, color: "#f97316" },
+  { name: "Block", value: 5, color: "#374151" },
 ];
 
 const chartConfig = {
@@ -104,7 +104,8 @@ export const ExecutionReport = () => {
           {/* Donut Chart */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div>
-              <ChartContainer config={chartConfig} className="h-64">
+              <h3 className="text-lg font-semibold mb-4">Execution Status</h3>
+              <div className="h-80 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -112,19 +113,36 @@ export const ExecutionReport = () => {
                       cx="50%"
                       cy="50%"
                       innerRadius={60}
-                      outerRadius={100}
-                      paddingAngle={5}
+                      outerRadius={120}
+                      paddingAngle={2}
                       dataKey="value"
                     >
                       {chartData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
+                    <ChartTooltip 
+                      content={({ active, payload }) => {
+                        if (active && payload && payload.length) {
+                          const data = payload[0];
+                          return (
+                            <div className="bg-white p-3 border rounded shadow-lg">
+                              <p className="font-semibold">{data.name}</p>
+                              <p className="text-sm">Count: {data.value}</p>
+                            </div>
+                          );
+                        }
+                        return null;
+                      }}
+                    />
+                    <Legend 
+                      verticalAlign="bottom" 
+                      height={36}
+                      formatter={(value, entry) => `${value}: ${entry.payload.value}`}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
-              </ChartContainer>
+              </div>
             </div>
 
             {/* Summary Table */}
@@ -152,15 +170,15 @@ export const ExecutionReport = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Test Cases In Release</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>45</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Result Received (0.00%)</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>Result Received (6.26%)</TableCell>
+                    <TableCell>45</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
@@ -168,47 +186,47 @@ export const ExecutionReport = () => {
                   </TableRow>
                   <TableRow>
                     <TableCell>Total Datasets</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>00 secs</TableCell>
+                    <TableCell>45</TableCell>
+                    <TableCell>120 secs</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="text-green-600">Pass</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>00 secs</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>25</TableCell>
+                    <TableCell>80 secs</TableCell>
+                    <TableCell>20</TableCell>
+                    <TableCell>3</TableCell>
+                    <TableCell>2</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="text-red-600">Fail</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>00 secs</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>8</TableCell>
+                    <TableCell>25 secs</TableCell>
+                    <TableCell>5</TableCell>
+                    <TableCell>2</TableCell>
+                    <TableCell>1</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="text-orange-600">Skip</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>7</TableCell>
                     <TableCell>-</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>4</TableCell>
+                    <TableCell>2</TableCell>
+                    <TableCell>1</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="text-gray-600">Block</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>5</TableCell>
                     <TableCell>-</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
-                    <TableCell>0</TableCell>
+                    <TableCell>3</TableCell>
+                    <TableCell>1</TableCell>
+                    <TableCell>1</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell className="font-semibold">Remaining</TableCell>
-                    <TableCell>719</TableCell>
+                    <TableCell>674</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
                     <TableCell>-</TableCell>
